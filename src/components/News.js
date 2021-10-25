@@ -53,6 +53,15 @@ export class News extends Component {
         }
        
     }
+    componentDidMount(){
+      let url="https://newsapi.org/v2/top-headlines?country=In&category=business&apiKey=67ce39eb98e54b46982dfef756c7d38e";
+      let data= await fetch(url);
+      let parsedData = await data.json();
+      console.log(parsedData);
+      this.setState({articles: parsedData.articles})
+
+      
+    }
     render() {
         return (
             <div className='container my-3'>
@@ -61,7 +70,7 @@ export class News extends Component {
                 <div className="row">
                 {this.state.articles.map((element)=>{
                   return <div className="col-md-3" key={element.url}>
-                    <NewsItems  title={element.title.slice(0,45)} description={element.description.slice(0,88)} imageUrl={element.urlToImage}   newsUrl={element.url}/>
+                    <NewsItems  title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,88):""} imageUrl={element.urlToImage}   newsUrl={element.url}/>
                     </div>
 
                 })}
